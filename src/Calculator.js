@@ -22,11 +22,16 @@ let keys = [
 class Calculator extends Component {
     constructor(props) {
         super(props);
+        this.state = {value: '0', computed: false};
     }
     handleClick = (e) => {
         let value = e.target.textContent;
         let className = e.target.className;
-        if (this.state.value !== '0' || className === 'operator' || value === '.') {
+        if (this.state.computed && className !== 'operator') {
+            this.setState({computed: false});
+        }
+        else if (this.state.value !== '0' || className === 'operator' || value === '.') {
+            this.setState({computed: false});
             value = this.state.value + value;
         }
         this.handleChange(e, value);
@@ -43,6 +48,7 @@ class Calculator extends Component {
     handleEquals = (e) => {
         e.stopPropagation();
         let result = eval(this.state.value);
+        this.setState({computed: true});
         this.handleChange(e, result);
     }
     render() {
