@@ -22,13 +22,8 @@ let keys = [
 class Calculator extends Component {
     constructor(props) {
         super(props);
-        this.state = {value: '0'};
-        this.handleClick = this.handleClick.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.clear = this.clear.bind(this);
-        this.handleEquals = this.handleEquals.bind(this);
     }
-    handleClick(e) {
+    handleClick = (e) => {
         let value = e.target.textContent;
         let className = e.target.className;
         if (this.state.value !== '0' || className === 'operator' || value === '.') {
@@ -36,16 +31,16 @@ class Calculator extends Component {
         }
         this.handleChange(e, value);
     }
-    handleChange(e, val) {
+    handleChange = (e, val) => {
         this.setState({value: val || e.target.value});
     }
-    clear(e) {
+    clear = (e) => {
         e.stopPropagation();
         let input = document.querySelector('input[type="text"]');
         input.value = '0';
         this.setState({value: '0'});
     }
-    handleEquals(e) {
+    handleEquals = (e) => {
         e.stopPropagation();
         let result = eval(this.state.value);
         this.handleChange(e, result);
